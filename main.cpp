@@ -9,25 +9,27 @@
 #include <vector>
 #include <regex>
 #include "MinHeap.h"
+#include "hashmap.h"
+#include <iterator>
 
 using namespace std;
 
 
 //i used a different method for splitting the CSV so that way it works for multiple commas in the brackets
 //please utilize this with the other stuff unless you have a better method
-vector<string> splitCSVLine(const string& line){
+vector<string> splitCSVLine(const string& line) {
     vector<string> fields;
     string field;
     bool inQuotes = false;
-    for(size_t i = 0; i < line.size(); i++){
+    for (size_t i = 0; i < line.size(); i++) {
         char currentChar = line[i];
-        if(currentChar == '"'){
+        if (currentChar == '"') {
             inQuotes = !inQuotes;
         }
-        if(!inQuotes && currentChar == ',') {
+        if (!inQuotes && currentChar == ',') {
             fields.push_back(field);
             field.clear();
-        }else{
+        } else {
             field += currentChar;
         }
     }
@@ -55,6 +57,7 @@ int main(){
         vector<string> fields = splitCSVLine(line);
         //process the fields
         //CSV isnt set yet for the minheap, use the fields as their values if you can do it, feel free to change datatypes in song struct
+
         if(fields.size() == 10){
 /*            cout << "Date: " << fields[0] << endl;
             cout << "Country: " << fields[1] << endl;
@@ -86,6 +89,7 @@ int main(){
         }else{
             cerr << "Invalid line: " << line << endl;
         }
+
     }
     cout << minHeap.searchByName("\"Who Want Smoke?? (feat. G Herbo, Lil Durk & 21 Savage)\"").artist_genres << endl;
     cout << minHeap.searchByName("As It Was").artist_genres << endl;
@@ -93,6 +97,28 @@ int main(){
     for (auto i: filteredSongs){
         cout << i.name << " by: " << i.artists << " is explicit? : " << i.explicit_song << " highest position: " <<  i.position << " spotify id "<<  i.track_id << endl;
     }
+
+
     file.close();
+    cout << endl;
+    cout << "minheap build finished.\n";
+
+// HASHMAP TESTING
+    Hashmap hashmap;
+
+    unordered_map<string, vector<string>> t = hashmap.getArtistNames();
+    cout << t.size() << endl;
+
+//    for (unordered_map<string, vector<string>>::iterator it=t.begin(); it!=t.end(); it++) {
+//        cout << it->first << endl;
+//    }
+
+    // outputs all track IDs with Ed Sheeran as artist.
+    vector<string> ts = hashmap.findTracksByArtist("'Ed Sheeran'");
+    for (string i : ts) {
+        cout << i << endl;
+    }
+
+
     return 0;
 }
