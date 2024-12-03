@@ -82,6 +82,9 @@ public:
                 matchingSongs.push_back(song);
             }
         }
+        //genre seems to be sorted additionally by streams, but that i feel defeats the purpose of the min heap.
+        // Since the ones who achieved the highest (lowest technically i guess) position are already added first,
+        // it seems redundant to then compare the streams amongst all of them and then cut it down to 5
         sort(matchingSongs.begin(), matchingSongs.end(), [](const Song& a, const Song& b){
             return a.streams > b.streams;
         });
