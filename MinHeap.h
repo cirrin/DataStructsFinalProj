@@ -13,7 +13,6 @@ struct Song{
     string date, country, track_id, artists, artist_genres, name;
     int position, streams, duration;
     bool explicit_song;
-
     bool operator<(const Song& other) const{
         return position < other.position;
     }
@@ -36,7 +35,7 @@ private:
     }
 
     void heapifyUp(int i){
-        while(i > 0 && heap[i] < heap[findParent(i)]){
+        while(i > 0 && heap[i].position < heap[findParent(i)].position){ // heapifies based on position
             swap(heap[i], heap[findParent(i)]);
             i = findParent(i);
         }
@@ -83,6 +82,9 @@ public:
                 matchingSongs.push_back(song);
             }
         }
+        //genre seems to be sorted additionally by streams, but that i feel defeats the purpose of the min heap.
+        // Since the ones who achieved the highest (lowest technically i guess) position are already added first,
+        // it seems redundant to then compare the streams amongst all of them and then cut it down to 5
         sort(matchingSongs.begin(), matchingSongs.end(), [](const Song& a, const Song& b){
             return a.streams > b.streams;
         });
