@@ -64,7 +64,7 @@ int main(){
     vector<string> genres;
     string genre = "italian adult pop";
     vector<Song> filteredSongs;
-    ifstream file("charts(fixed).csv");
+    ifstream file("../charts(fixed).csv");
     if(!file.is_open()){
         cerr << "Could not open the file!" << endl;
         return 1;
@@ -87,19 +87,19 @@ int main(){
             cout << "Position: " << fields[2] << endl;
             cout << "Streams: " << fields[3] << endl;
             cout << "Track ID: " << fields[4] << endl;
-            cout << "Artists: " << fields[5] << endl;
-            cout << "Genres: " << fields[6] << endl;
-            cout << "Duration: " << fields[7] << endl;
-            cout << "Explicit: " << fields[8] << endl;*/
-            cout << "Name: " << fields[9] << endl;
+            cout << "Artists: " << fields[5] << endl;*/
+           // cout << "Genres: " << fields[6] << endl;
+           // cout << "Duration: " << fields[7] << endl;
+           // cout << "Explicit: " << fields[8] << endl;
+           // cout << "Name: " << fields[9] << endl;
             Song *x = new Song; // feel free to change this implementation
             x->date= fields[0];
             x->country = fields[1];
             x->position = stoi(fields[2]);
             x->streams = stoi(fields[2]);
             x->track_id = fields[4];
-            x->artists = variableSplit(fields[5]);
-            x->artist_genres = variableSplit(fields[6]);
+            x->artists =fields[5];
+            x->artist_genres =fields[6];
             x->duration = stoi(fields[7]);
             if (fields[8] == "True"){
                 x->explicit_song = true;
@@ -114,6 +114,19 @@ int main(){
         }
 
     }
+    cout << "Artist Search: " << endl;
+    vector<Song> songs = minHeap.searchByArtist("Avicii");
+    for(int i=0; i<songs.size();i++){
+        cout << songs[i].name << endl;
+    }
+    cout <<"Id Search:"<<endl;
+    cout << minHeap.searchbyID("5dVUSdsePmEKkq4ryfrobU").name << endl;
+    cout << "Genre Search: " << endl;
+    vector<Song> genresongs = minHeap.searchByGenre("Pop");
+    for(int i=0; i<genresongs.size();i++){
+        cout << genresongs[i].name << endl;
+    }
+    /*
     filteredSongs = minHeap.searchByGenre(genre);
     for (auto i: filteredSongs) {
         cout << i.name << " by: ";
@@ -127,10 +140,11 @@ int main(){
         }
         cout << " is explicit? : " << i.explicit_song << " highest position: " << i.position << " spotify id " << i.track_id << endl;
     }
+     */
     file.close();
     cout << endl;
     cout << "minheap build finished.\n";
-
+/*
 // HASHMAP TESTING
     Hashmap hashmap;
 
@@ -146,7 +160,7 @@ int main(){
     for (string i : ts) {
         cout << i << endl;
     }
-
+*/
 
     return 0;
 }

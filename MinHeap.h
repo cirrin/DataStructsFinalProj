@@ -11,7 +11,7 @@ using namespace std;
 
 struct Song{
     string date, country, track_id, name;
-    vector<string> artist_genres, artists;
+    string artist_genres, artists;
     int position, streams, duration;
     bool explicit_song;
     bool operator<(const Song& other) const{
@@ -74,32 +74,35 @@ public:
         }
         throw invalid_argument("Song not found.");
     }
-    //both searches are incomplete, still working on them due to CSV complications which havent been worked
-    vector<Song> searchByGenre(string& genre){
+
+    vector<Song> searchByGenre(const string& genre){
         string searchGenre = lowerCase(genre);
         vector<Song> matchingSongs;
-        for(Song& song:heap) {
-            for (auto x: song.artist_genres) {
-                if (lowerCase(x) == searchGenre) {
+        for(Song& song:heap){
+                if(song.artist_genres.find(searchGenre) != string::npos&&matchingSongs.size()!=5){
                     matchingSongs.push_back(song);
                 }
-            }
-            if (matchingSongs.size() == 5){
-                break;
-            }
         }
-        //genre seems to be sorted additionally by streams, but that i feel defeats the purpose of the min heap.
-        // Since the ones who achieved the highest (lowest technically i guess) position are already added first,
-        // it seems redundant to then compare the streams amongst all of them and then cut it down to 5
- /*       sort(matchingSongs.begin(), matchingSongs.end(), [](const Song& a, const Song& b){
-            return a.streams > b.streams;
-        });*/
-/*        if(matchingSongs.size() > 5){
-            matchingSongs.resize(5);
-        }*/
         return matchingSongs;
     }
 
+    vector<Song> searchByArtist(const string& artist){
+        vector<Song> matchingSongs;
+        for(Song& song:heap){
+            if(song.artists.find(artist) != string::npos&&matchingSongs.size()!=5){
+                matchingSongs.push_back(song);}
+        }
+        return matchingSongs;
+    }
+
+    Song searchbyID(const string& track_id){
+        for(Song& song:heap){
+            if(song.track_id==track_id){
+                return song;
+            }
+        }
+        throw invalid_argument("Song not found.");
+    }
 
 
 };
