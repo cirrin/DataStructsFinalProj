@@ -36,11 +36,33 @@ vector<string> splitCSVLine(const string& line) {
     fields.push_back(field);
     return fields;
 }
+vector<string> variableSplit(string& variable){
+    vector<string> variables;
+    string var;
+    bool inQuotes = false;
+    for (size_t i = 0; i < variable.size(); i++) {
+        char currentChar = variable[i];
+        if (currentChar == '\'') {
+            inQuotes = !inQuotes;
+        }
+        if (!inQuotes && currentChar == ',') {
+            variables.push_back(var);
+            var.clear();
+            i++; // removes space between genres
+        }
+        else if (currentChar != '[' && currentChar != '\'' && currentChar != '\"' && currentChar != ']') {
+            var += currentChar;
+        }
+    }
+    variables.push_back(var);
+    return variables;
+}
 
 int main(){
-    string prevSong = "";
+    string test = "\"['drill', 'florida rap', 'southern hip hop', 'atl hip hop', 'chicago rap', 'chicago drill', 'trap', 'hip hop', 'rap']\"";
     MinHeap minHeap;
-    string genre = "['pop']";
+    vector<string> genres;
+    string genre = "italian adult pop";
     vector<Song> filteredSongs;
     ifstream file("charts(fixed).csv");
     if(!file.is_open()){
@@ -55,6 +77,7 @@ int main(){
         line = regex_replace(line, regex("^\\s+|\\s+$"), "");
         //splits the line into fields
         vector<string> fields = splitCSVLine(line);
+
         //process the fields
         //CSV isnt set yet for the minheap, use the fields as their values if you can do it, feel free to change datatypes in song struct
 
@@ -75,8 +98,8 @@ int main(){
             x->position = stoi(fields[2]);
             x->streams = stoi(fields[2]);
             x->track_id = fields[4];
-            x->artists = fields[5];
-            x->artist_genres = fields[6];
+            x->artists = variableSplit(fields[5]);
+            x->artist_genres = variableSplit(fields[6]);
             x->duration = stoi(fields[7]);
             if (fields[8] == "True"){
                 x->explicit_song = true;
@@ -91,14 +114,19 @@ int main(){
         }
 
     }
-    cout << minHeap.searchByName("\"Who Want Smoke?? (feat. G Herbo, Lil Durk & 21 Savage)\"").artist_genres << endl;
-    cout << minHeap.searchByName("As It Was").artist_genres << endl;
     filteredSongs = minHeap.searchByGenre(genre);
-    for (auto i: filteredSongs){
-        cout << i.name << " by: " << i.artists << " is explicit? : " << i.explicit_song << " highest position: " <<  i.position << " spotify id "<<  i.track_id << endl;
+    for (auto i: filteredSongs) {
+        cout << i.name << " by: ";
+        for (int x = 0; x < i.artists.size(); x++) {
+            if (x != i.artists.size() - 1) {
+                cout << i.artists[x] << ", ";
+            }
+            else{
+                cout << i.artists[x] << ' ';
+            }
+        }
+        cout << " is explicit? : " << i.explicit_song << " highest position: " << i.position << " spotify id " << i.track_id << endl;
     }
-
-
     file.close();
     cout << endl;
     cout << "minheap build finished.\n";

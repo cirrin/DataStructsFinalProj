@@ -10,7 +10,8 @@
 using namespace std;
 
 struct Song{
-    string date, country, track_id, artists, artist_genres, name;
+    string date, country, track_id, name;
+    vector<string> artist_genres, artists;
     int position, streams, duration;
     bool explicit_song;
     bool operator<(const Song& other) const{
@@ -77,22 +78,28 @@ public:
     vector<Song> searchByGenre(string& genre){
         string searchGenre = lowerCase(genre);
         vector<Song> matchingSongs;
-        for(Song& song:heap){
-            if(lowerCase(song.artist_genres).find(searchGenre) != string::npos){
-                matchingSongs.push_back(song);
+        for(Song& song:heap) {
+            for (auto x: song.artist_genres) {
+                if (lowerCase(x) == searchGenre) {
+                    matchingSongs.push_back(song);
+                }
+            }
+            if (matchingSongs.size() == 5){
+                break;
             }
         }
         //genre seems to be sorted additionally by streams, but that i feel defeats the purpose of the min heap.
         // Since the ones who achieved the highest (lowest technically i guess) position are already added first,
         // it seems redundant to then compare the streams amongst all of them and then cut it down to 5
-        sort(matchingSongs.begin(), matchingSongs.end(), [](const Song& a, const Song& b){
+ /*       sort(matchingSongs.begin(), matchingSongs.end(), [](const Song& a, const Song& b){
             return a.streams > b.streams;
-        });
-        if(matchingSongs.size() > 5){
+        });*/
+/*        if(matchingSongs.size() > 5){
             matchingSongs.resize(5);
-        }
+        }*/
         return matchingSongs;
     }
+
 
 
 };
