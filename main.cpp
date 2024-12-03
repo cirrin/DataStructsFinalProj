@@ -12,48 +12,7 @@
 
 using namespace std;
 
-/*
-vector<string> splitString(string s) {
-    vector<string> result;
-    string token = "";
 
-    for (char c : s ) {
-        if (c == ',') {
-            result.push_back(token);
-            token = "";
-        } else {
-            token += c;
-        }
-    }
-    result.push_back(token);
-    return result;
-}
-// read in from file.
-void readFileMaps(map<string, string> trackNames, map<string, string> artistNames, map<string, string> genre) {
-    ifstream file;
-    file.open("charts.csv");
-
-    if (!file.is_open()) {
-        cout << "ERROR: file cannot be opened!" << endl;
-        return;
-    }
-
-    // tracknames is <name, song ID>
-    // artistnames is <singular artist name, song ID>
-    // genre is <genre, song ID>
-
-    string line;
-    getline(file, line);
-    vector<string> test = splitString(line);
-
-    for (string i : test) {
-        cout << i << " ";
-    }
-    cout << endl;
-
-    file.close();
-}
-}*/
 //i used a different method for splitting the CSV so that way it works for multiple commas in the brackets
 //please utilize this with the other stuff unless you have a better method
 vector<string> splitCSVLine(const string& line){
