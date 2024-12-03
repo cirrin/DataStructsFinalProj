@@ -31,7 +31,7 @@ vector<string> splitString(string s) {
 // read in from file.
 void readFileMaps(map<string, string> trackNames, map<string, string> artistNames, map<string, string> genre) {
     ifstream file;
-    file.open("../charts.csv");
+    file.open("charts.csv");
 
     if (!file.is_open()) {
         cout << "ERROR: file cannot be opened!" << endl;
@@ -77,8 +77,11 @@ vector<string> splitCSVLine(const string& line){
 }
 
 int main(){
+    string prevSong = "";
     MinHeap minHeap;
-    ifstream file("../charts.csv");
+    string genre = "['pop']";
+    vector<Song> filteredSongs;
+    ifstream file("charts(fixed).csv");
     if(!file.is_open()){
         cerr << "Could not open the file!" << endl;
         return 1;
@@ -94,7 +97,7 @@ int main(){
         //process the fields
         //CSV isnt set yet for the minheap, use the fields as their values if you can do it, feel free to change datatypes in song struct
         if(fields.size() == 10){
-            cout << "Date: " << fields[0] << endl;
+/*            cout << "Date: " << fields[0] << endl;
             cout << "Country: " << fields[1] << endl;
             cout << "Position: " << fields[2] << endl;
             cout << "Streams: " << fields[3] << endl;
@@ -102,12 +105,34 @@ int main(){
             cout << "Artists: " << fields[5] << endl;
             cout << "Genres: " << fields[6] << endl;
             cout << "Duration: " << fields[7] << endl;
-            cout << "Explicit: " << fields[8] << endl;
+            cout << "Explicit: " << fields[8] << endl;*/
             cout << "Name: " << fields[9] << endl;
-            cout << "Next Song: " << endl;
+            Song *x = new Song; // feel free to change this implementation
+            x->date= fields[0];
+            x->country = fields[1];
+            x->position = stoi(fields[2]);
+            x->streams = stoi(fields[2]);
+            x->track_id = fields[4];
+            x->artists = fields[5];
+            x->artist_genres = fields[6];
+            x->duration = stoi(fields[7]);
+            if (fields[8] == "True"){
+                x->explicit_song = true;
+            }
+            else{
+                x->explicit_song = false;
+            }
+            x->name = fields[9];
+            minHeap.insert(*x);
         }else{
             cerr << "Invalid line: " << line << endl;
         }
+    }
+    cout << minHeap.searchByName("\"Who Want Smoke?? (feat. G Herbo, Lil Durk & 21 Savage)\"").artist_genres << endl;
+    cout << minHeap.searchByName("As It Was").artist_genres << endl;
+    filteredSongs = minHeap.searchByGenre(genre);
+    for (auto i: filteredSongs){
+        cout << i.name << " by: " << i.artists << " is explicit? : " << i.explicit_song << " highest position: " <<  i.position << " spotify id "<<  i.track_id << endl;
     }
     file.close();
     return 0;

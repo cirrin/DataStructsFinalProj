@@ -13,7 +13,6 @@ struct Song{
     string date, country, track_id, artists, artist_genres, name;
     int position, streams, duration;
     bool explicit_song;
-
     bool operator<(const Song& other) const{
         return position < other.position;
     }
@@ -36,7 +35,7 @@ private:
     }
 
     void heapifyUp(int i){
-        while(i > 0 && heap[i] < heap[findParent(i)]){
+        while(i > 0 && heap[i].position < heap[findParent(i)].position){ // heapifies based on position
             swap(heap[i], heap[findParent(i)]);
             i = findParent(i);
         }
