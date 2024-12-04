@@ -97,10 +97,10 @@ void readFileMaps(unordered_map<string, string> &trackNames,
     while(line != ",,,,,,,,,") {
         vector<string> test = splitString(line);
 
-        for(string j : test) {
-            cout << j << " ";
-        }
-        cout << endl;
+//        for(string j : test) {
+//            cout << j << " ";
+//        }
+//        cout << endl;
 
         // the track ID will be the key, and all information will be held there.
         trackID[test[4]] = test;
@@ -160,6 +160,12 @@ public:
         // returns a vector of strings, of track IDs that fall in a certain genre.
         // if the genre does not exist, will return an empty vector.
         return genres[g];
+    }
+
+    vector<string> findTracksByName(string n) {
+        string id = trackNames[n];
+        vector<string> temp = findByID(id);
+        return temp;
     }
 
     unordered_map<string, vector<string>> getArtistNames() {
