@@ -109,14 +109,17 @@ void readFileMaps(unordered_map<string, string> &trackNames,
         // add into artistnames.
         vector<string> aNames = splitArtistGenre(test[5]);
         for (string i : aNames) {
-            //cout << i << endl;
+            //cout << i.substr(1,i.size()-2) << endl;
             // current track will be added to all artist name keys.
-            artistNames[i].push_back(test[4]);
+            artistNames[i.substr(1,i.size()-2)].push_back(test[4]);
         }
         // repeat the same for genres.
         vector<string> gs = splitArtistGenre(test[6]);
-        for (string i : gs) {
-            genre[i].push_back(test[4]);
+        //if (gs.size() == 0) continue;
+        if(test[6] != "[]") {
+            for (string i: gs) {
+                genre[i.substr(1, i.size() - 2)].push_back(test[4]);
+            }
         }
         //printing out each row.
         /*for (string i: test) {
@@ -141,7 +144,7 @@ private:
 public:
     Hashmap() {
         readFileMaps(trackNames, artistNames, genres, trackID);
-        cout << "hashmap created.\n";
+
     }
 
     vector<string> findByID(string id) {

@@ -174,10 +174,8 @@ int main(){
             cout << "What method would you like to use?" << endl;
             cout << "1 for Hashmap, 2 for Minheap:";
             cin >> searchchoice;
+            cout << endl;
             if(searchchoice == 1){
-                //Sherwood please implement Hashmap search logic here
-                // yuppers
-                cout << endl;
                 // need to display name, explicit, duration (in seconds).
                 // get trackID map. Find the vector associated. Then print out information
                 auto beforeSearchHash = std::chrono::steady_clock::now();
@@ -197,8 +195,8 @@ int main(){
                     cout << "Explicit?: " << trackIDInformation[8] << endl;
                 }
 
-                cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds\n";
-                cout << std::chrono::duration_cast<std::chrono::milliseconds>(searchDuration).count() << " milliseconds\n";
+                cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds or ";
+                cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
 
             }else if(searchchoice == 2){
                 try{
@@ -224,9 +222,29 @@ int main(){
             cout << "What method would you like to use?" << endl;
             cout << "1 for Hashmap, 2 for Minheap:";
             cin >> searchchoice;
+
+            cout << endl;
+
             if(searchchoice == 1){
-                //Sherwood please implement Hashmap search logic here
-                cout << "Hashmap search not implemented yet." << endl;
+                auto beforeSearchHash = std::chrono::steady_clock::now();
+                vector<string> trackIDInformation = hashmap.findByID(ID);
+                auto afterSearchHash = std::chrono::steady_clock::now();
+                auto searchDuration = afterSearchHash - beforeSearchHash;
+
+                // if findbyid finds no match, then we return an empty list.
+                // this catches the empty list.
+                if (trackIDInformation.size() == 0) {
+                    cout << "Track name not found. Please type exact name.\n";
+                }
+                else {
+                    cout << "Song name: " << trackIDInformation[9] << endl;
+                    cout << "Duration (seconds): " << int(stoi(trackIDInformation[7])/1000) << endl;
+                    cout << "Explicit?: " << trackIDInformation[8] << endl;
+                }
+
+                cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds or ";
+                cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
+
             }else if(searchchoice == 2){
                 try{
                     Song foundsong = minHeap.searchbyID(ID);
@@ -252,13 +270,45 @@ int main(){
             string Artist;
             cout << "Input Artist name, try to be exact (Case Sensitive):";
             getline(cin, Artist);
+            if (Artist == "Ed Sheeran") cout << "true\n";
             int searchchoice;
             cout << "What method would you like to use?" << endl;
             cout << "1 for Hashmap, 2 for Minheap:";
             cin >> searchchoice;
+
+            cout << endl;
+
+            // CHOSE HASHMAP
             if(searchchoice == 1){
-                //Sherwood please implement Hashmap search logic here
-                cout << "Hashmap search not implemented yet." << endl;
+                auto beforeSearchHash = std::chrono::steady_clock::now();
+                vector<string> artistTracksInformation = hashmap.findTracksByArtist(Artist);
+                auto afterSearchHash = std::chrono::steady_clock::now();
+                auto searchDuration = afterSearchHash - beforeSearchHash;
+
+                cout << endl;
+
+                // if findbyid finds no match, then we return an empty list.
+                // this catches the empty list.
+                if (artistTracksInformation.size() == 0) {
+                    cout << "Track name not found. Please type exact name.\n";
+                }
+                else {
+                    cout << "ALL TRACKS BY " << Artist << ": \n\n";
+                    // we need to loop through each track, and post the track information of each.
+                    for (string id : artistTracksInformation) {
+                        vector<string> trackIDInformation = hashmap.findByID(id);
+
+                        cout << "Song name: " << trackIDInformation[9] << endl;
+                        cout << "Duration (seconds): " << int(stoi(trackIDInformation[7])/1000) << endl;
+                        cout << "Explicit?: " << trackIDInformation[8] << endl;
+
+                        cout << endl;
+                    }
+                }
+
+                cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds or ";
+                cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
+
             }else if(searchchoice == 2){
                 vector<Song> songsuggestions = minHeap.searchByArtist(Artist);
                 if(!songsuggestions.empty()){
@@ -290,13 +340,44 @@ int main(){
             string Genre;
             cout << "Input Genre, lowercase only:";
             getline(cin, Genre);
+            cout << Genre << endl;
             int searchchoice;
             cout << "What method would you like to use?" << endl;
             cout << "1 for Hashmap, 2 for Minheap:";
             cin >> searchchoice;
+
+            cout << endl;
+
             if(searchchoice == 1){
-                //Sherwood please implement Hashmap search logic here
-                cout << "Hashmap search not implemented yet." << endl;
+                auto beforeSearchHash = std::chrono::steady_clock::now();
+                vector<string> genreTracksInformation = hashmap.findTracksByGenre(Genre);
+                auto afterSearchHash = std::chrono::steady_clock::now();
+                auto searchDuration = afterSearchHash - beforeSearchHash;
+
+
+                // if findbyid finds no match, then we return an empty list.
+                // this catches the empty list.
+                if (genreTracksInformation.size() == 0) {
+                    cout << "Genre not found. Please type exact genre.\n";
+                }
+                else {
+                    cout << "ALL TRACKS OF GENRE \"" << Genre << "\":\n\n";
+
+                    // we need to loop through each track, and post the track information of each.
+                    for (string id : genreTracksInformation) {
+                        vector<string> trackIDInformation = hashmap.findByID(id);
+
+                        cout << "Song name: " << trackIDInformation[9] << endl;
+                        cout << "Duration (seconds): " << int(stoi(trackIDInformation[7])/1000) << endl;
+                        cout << "Explicit?: " << trackIDInformation[8] << endl;
+
+                        cout << endl;
+                    }
+                }
+
+                cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds or ";
+                cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
+
             }else if(searchchoice == 2){
                 vector<Song> songsuggestions = minHeap.searchByGenre(Genre);
                 if(!songsuggestions.empty()){
