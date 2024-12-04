@@ -67,7 +67,7 @@ int main(){
     vector<string> genres;
     string genre = "italian adult pop";
     vector<Song> filteredSongs;
-    ifstream file("charts(fixed).csv");
+    ifstream file("../charts(fixed).csv");
     if(!file.is_open()){
         cerr << "Could not open the file!" << endl;
         return 1;
@@ -153,9 +153,8 @@ int main(){
     cout << "======================" << endl;
     int choice;
 
-    cout << "\nHashmap created in: " << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() << " microseconds\n";
-    cout << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() << " milliseconds\n";
-    cout << std::chrono::duration_cast<std::chrono::seconds>(duration).count() << " seconds\n\n";
+    cout << "\nHashmap created in: " << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() << " microseconds or ";
+    cout << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() << " milliseconds\n\n";
 
     do{
         cout << "1: Search by Name" << endl;
@@ -178,11 +177,14 @@ int main(){
             if(searchchoice == 1){
                 //Sherwood please implement Hashmap search logic here
                 // yuppers
-                cout << '='*20 << endl;
+                cout << endl;
                 // need to display name, explicit, duration (in seconds).
                 // get trackID map. Find the vector associated. Then print out information
-
+                auto beforeSearchHash = std::chrono::steady_clock::now();
                 vector<string> trackIDInformation = hashmap.findTracksByName(name);
+                auto afterSearchHash = std::chrono::steady_clock::now();
+                auto searchDuration = afterSearchHash - beforeSearchHash;
+
 
                 // if findbyid finds no match, then we return an empty list.
                 // this catches the empty list.
@@ -192,8 +194,11 @@ int main(){
                 else {
                     cout << "Song name: " << trackIDInformation[9] << endl;
                     cout << "Duration (seconds): " << int(stoi(trackIDInformation[7])/1000) << endl;
-                    cout << "Explicit?: " << trackIDInformation[8] << endl << '='*20 << endl;
+                    cout << "Explicit?: " << trackIDInformation[8] << endl;
                 }
+
+                cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds\n";
+                cout << std::chrono::duration_cast<std::chrono::milliseconds>(searchDuration).count() << " milliseconds\n";
 
             }else if(searchchoice == 2){
                 try{
