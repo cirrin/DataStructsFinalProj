@@ -11,6 +11,9 @@
 #include "MinHeap.h"
 #include "hashmap.h"
 #include <iterator>
+#include <chrono>
+#include <thread>
+
 
 using namespace std;
 
@@ -136,12 +139,24 @@ int main(){
         cout << " is explicit? : " << i.explicit_song << " highest position: " << i.position << " spotify id " << i.track_id << endl;
     }
      */
+
+    auto b4hash = std::chrono::steady_clock::now();
+    Hashmap hashmap;
+    auto afterHash = std::chrono::steady_clock::now();
+    auto duration = afterHash - b4hash;
+
+
     cout << "======================" << endl;
     cout << " | Group 54 Spotify |" << endl;
     cout << " | Song Finder      |" << endl;
     cout << " | from top 200s :D |" << endl;
     cout << "======================" << endl;
     int choice;
+
+    cout << "\nHashmap created in: " << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() << " microseconds\n";
+    cout << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() << " milliseconds\n";
+    cout << std::chrono::duration_cast<std::chrono::seconds>(duration).count() << " seconds\n\n";
+
     do{
         cout << "1: Search by Name" << endl;
         cout << "2: Search by Track ID" << endl;
@@ -162,7 +177,24 @@ int main(){
             cin >> searchchoice;
             if(searchchoice == 1){
                 //Sherwood please implement Hashmap search logic here
-                cout << "Hashmap search not implemented yet." << endl;
+                // yuppers
+                cout << '='*20 << endl;
+                // need to display name, explicit, duration (in seconds).
+                // get trackID map. Find the vector associated. Then print out information
+
+                vector<string> trackIDInformation = hashmap.findTracksByName(name);
+
+                // if findbyid finds no match, then we return an empty list.
+                // this catches the empty list.
+                if (trackIDInformation.size() == 0) {
+                    cout << "Track name not found. Please type exact name.\n";
+                }
+                else {
+                    cout << "Song name: " << trackIDInformation[9] << endl;
+                    cout << "Duration (seconds): " << int(stoi(trackIDInformation[7])/1000) << endl;
+                    cout << "Explicit?: " << trackIDInformation[8] << endl << '='*20 << endl;
+                }
+
             }else if(searchchoice == 2){
                 try{
                 Song foundsong = minHeap.searchByName(name);
