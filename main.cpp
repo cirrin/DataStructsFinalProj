@@ -64,7 +64,7 @@ int main(){
     vector<string> genres;
     string genre = "italian adult pop";
     vector<Song> filteredSongs;
-    ifstream file("../charts(fixed).csv");
+    ifstream file("charts(fixed).csv");
     if(!file.is_open()){
         cerr << "Could not open the file!" << endl;
         return 1;
@@ -208,7 +208,7 @@ int main(){
         }else if(choice == 3){
             cout << "Suggestions by Artist selected." << endl;
             string Artist;
-            cout << "Input Artist name, try to be exact:";
+            cout << "Input Artist name, try to be exact (Case Sensitive):";
             getline(cin, Artist);
             int searchchoice;
             cout << "What method would you like to use?" << endl;
@@ -218,21 +218,29 @@ int main(){
                 //Sherwood please implement Hashmap search logic here
                 cout << "Hashmap search not implemented yet." << endl;
             }else if(searchchoice == 2){
-                cout << "Here are some suggestions!"<< endl;
-                cout << "Order is name, duration, and explicit." << endl;
-                try{
-                    vector<Song> songsuggestions = minHeap.searchByArtist(Artist);
+                vector<Song> songsuggestions = minHeap.searchByArtist(Artist);
+                if(!songsuggestions.empty()){
+                    cout << endl;
+                    cout << "Here are some suggestions!"<< endl;
+                    cout << "Order is name, duration, and explicit." << endl;
+                    cout << endl;
                     for(int i =0; i<songsuggestions.size();i++){
-                        cout << songsuggestions[i].name << ", "<<songsuggestions[i].duration/1000<<", "<<songsuggestions[i].explicit_song<<endl;
+                        cout<< i+1 << ": " << songsuggestions[i].name << ", "<<songsuggestions[i].duration/1000<<", "<<songsuggestions[i].explicit_song<<endl;
                     }
+                    cout << endl;
                     cout << "What next?" << endl;
+                    cout << endl;
                     cout << "===============" << endl;
-                }catch(exception& e){
+                }else{
+                    cout << endl;
                     cout << "Artist not found, try again from menu."<< endl;
+                    cout << endl;
                     cout << "===============" << endl;
                 }
             }else{
+                cout << endl;
                 cout << "Invalid method choice, try again from menu." << endl;
+                cout << endl;
                 cout << "===============" << endl;
             }
         }else if(choice == 4){
@@ -248,24 +256,33 @@ int main(){
                 //Sherwood please implement Hashmap search logic here
                 cout << "Hashmap search not implemented yet." << endl;
             }else if(searchchoice == 2){
-                cout << "Here are some suggestions!"<< endl;
-                cout << "Order is name, duration, and explicit." << endl;
-                try{
-                    vector<Song> songsuggestions = minHeap.searchByGenre(Genre);
+                vector<Song> songsuggestions = minHeap.searchByGenre(Genre);
+                if(!songsuggestions.empty()){
+                    cout << endl;
+                    cout << "Here are some suggestions!"<< endl;
+                    cout << "Order is name, duration, and explicit." << endl;
+                    cout << endl;
                     for(int i =0; i<songsuggestions.size();i++){
-                        cout << songsuggestions[i].name << ", "<<songsuggestions[i].duration/1000<<", "<<songsuggestions[i].explicit_song<<endl;
+                        cout << i+1 << ": " << songsuggestions[i].name << ", "<<songsuggestions[i].duration/1000<<", "<<songsuggestions[i].explicit_song<<endl;
                     }
+                    cout << endl;
                     cout << "What next?" << endl;
+                    cout << endl;
                     cout << "===============" << endl;
-                }catch(exception& e){
+                }else{
+                    cout << endl;
                     cout << "Genre not found, try again from menu."<< endl;
+                    cout << endl;
                     cout << "===============" << endl;
                 }
             }else{
+                cout << endl;
                 cout << "Invalid method choice, try again from menu." << endl;
+                cout << endl;
                 cout << "===============" << endl;
             }
         }else if(choice < 0 || choice > 4){
+            cout << endl;
             cout << "Invalid choice, try again." << endl;
         }
     }while(choice != 0);
