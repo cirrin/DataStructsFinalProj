@@ -228,8 +228,7 @@ int main(){
             if(searchchoice == 1){
                 auto beforeSearchHash = std::chrono::steady_clock::now();
                 vector<string> trackIDInformation = hashmap.findByID(ID);
-                auto afterSearchHash = std::chrono::steady_clock::now();
-                auto searchDuration = afterSearchHash - beforeSearchHash;
+
 
                 // if findbyid finds no match, then we return an empty list.
                 // this catches the empty list.
@@ -241,7 +240,8 @@ int main(){
                     cout << "Duration (seconds): " << int(stoi(trackIDInformation[7])/1000) << endl;
                     cout << "Explicit?: " << trackIDInformation[8] << endl;
                 }
-
+                auto afterSearchHash = std::chrono::steady_clock::now();
+                auto searchDuration = afterSearchHash - beforeSearchHash;
                 cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds or ";
                 cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
 
@@ -282,8 +282,7 @@ int main(){
             if(searchchoice == 1){
                 auto beforeSearchHash = std::chrono::steady_clock::now();
                 vector<string> artistTracksInformation = hashmap.findTracksByArtist(Artist);
-                auto afterSearchHash = std::chrono::steady_clock::now();
-                auto searchDuration = afterSearchHash - beforeSearchHash;
+
 
                 cout << endl;
 
@@ -305,7 +304,8 @@ int main(){
                         cout << endl;
                     }
                 }
-
+                auto afterSearchHash = std::chrono::steady_clock::now();
+                auto searchDuration = afterSearchHash - beforeSearchHash;
                 cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds or ";
                 cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
 
@@ -351,9 +351,6 @@ int main(){
             if(searchchoice == 1){
                 auto beforeSearchHash = std::chrono::steady_clock::now();
                 vector<string> genreTracksInformation = hashmap.findTracksByGenre(Genre);
-                auto afterSearchHash = std::chrono::steady_clock::now();
-                auto searchDuration = afterSearchHash - beforeSearchHash;
-
 
                 // if findbyid finds no match, then we return an empty list.
                 // this catches the empty list.
@@ -374,7 +371,8 @@ int main(){
                         cout << endl;
                     }
                 }
-
+                auto afterSearchHash = std::chrono::steady_clock::now();
+                auto searchDuration = afterSearchHash - beforeSearchHash;
                 cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds or ";
                 cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
 
