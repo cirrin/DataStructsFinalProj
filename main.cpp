@@ -101,19 +101,14 @@ int main(){
             x->artists =fields[5];
             x->artist_genres =fields[6];
             x->duration = stoi(fields[7]);
-            if (fields[8] == "True"){
-                x->explicit_song = true;
-            }
-            else{
-                x->explicit_song = false;
-            }
+            x->explicit_song = fields[8];
             x->name = fields[9];
             minHeap.insert(*x);
         }else{
             cerr << "Invalid line: " << line << endl;
         }
 
-    }
+    }/*
     cout << "Artist Search: " << endl;
     vector<Song> songs = minHeap.searchByArtist("Avicii");
     for(int i=0; i<songs.size();i++){
@@ -125,7 +120,7 @@ int main(){
     vector<Song> genresongs = minHeap.searchByGenre("Pop");
     for(int i=0; i<genresongs.size();i++){
         cout << genresongs[i].name << endl;
-    }
+    }*/
     /*
     filteredSongs = minHeap.searchByGenre(genre);
     for (auto i: filteredSongs) {
@@ -141,10 +136,143 @@ int main(){
         cout << " is explicit? : " << i.explicit_song << " highest position: " << i.position << " spotify id " << i.track_id << endl;
     }
      */
-    file.close();
+    cout << "======================" << endl;
+    cout << " | Group 54 Spotify |" << endl;
+    cout << " | Song Finder      |" << endl;
+    cout << " | from top 200s :D |" << endl;
+    cout << "======================" << endl;
+    int choice;
+    do{
+        cout << "1: Search by Name" << endl;
+        cout << "2: Search by Track ID" << endl;
+        cout << "3: Suggestions by Artist" << endl;
+        cout << "4: Suggestions by Genre" << endl;
+        cout << "0: Exit" << endl;
+        cout << "Enter choice:";
+        cin >> choice;
+        cin.ignore();
+        if(choice == 1){
+            cout << "Search by Name selected." << endl;
+            string name;
+            cout << "Input name of song, try to be exact:";
+            getline(cin, name);
+            int searchchoice;
+            cout << "What method would you like to use?" << endl;
+            cout << "1 for Hashmap, 2 for Minheap:";
+            cin >> searchchoice;
+            if(searchchoice == 1){
+                //Sherwood please implement Hashmap search logic here
+                cout << "Hashmap search not implemented yet." << endl;
+            }else if(searchchoice == 2){
+                try{
+                Song foundsong = minHeap.searchByName(name);
+                cout << "Song name: " << foundsong.name << ", Duration in sec: " <<foundsong.duration/1000 << ", Position: " << foundsong.position;
+                cout << ", Explicit? " << foundsong.explicit_song << endl;
+                cout << "What next?" << endl;
+                cout << "===============" << endl;
+                }catch(exception& e){
+                    cout << "Song not found, try again from menu."<< endl;
+                    cout << "===============" << endl;
+                }
+            }else{
+                cout << "Invalid method choice, try again from menu." << endl;
+                cout << "===============" << endl;
+            }
+        }else if(choice == 2){
+            cout << "Search by Track ID selected." << endl;
+            string ID;
+            cout << "Input ID of track:";
+            getline(cin, ID);
+            int searchchoice;
+            cout << "What method would you like to use?" << endl;
+            cout << "1 for Hashmap, 2 for Minheap:";
+            cin >> searchchoice;
+            if(searchchoice == 1){
+                //Sherwood please implement Hashmap search logic here
+                cout << "Hashmap search not implemented yet." << endl;
+            }else if(searchchoice == 2){
+                try{
+                    Song foundsong = minHeap.searchbyID(ID);
+                    cout << "Song name: " << foundsong.name << ", Duration in sec: " <<foundsong.duration/1000 << ", Position: " << foundsong.position;
+                    cout << ", Explicit? " << foundsong.explicit_song << endl;
+                    cout << "What next?" << endl;
+                    cout << "===============" << endl;
+                }catch(exception& e){
+                    cout << "Song not found, try again from menu."<< endl;
+                    cout << "===============" << endl;
+                }
+            }else{
+                cout << "Invalid method choice, try again from menu." << endl;
+                cout << "===============" << endl;
+            }
+        }else if(choice == 3){
+            cout << "Suggestions by Artist selected." << endl;
+            string Artist;
+            cout << "Input Artist name, try to be exact:";
+            getline(cin, Artist);
+            int searchchoice;
+            cout << "What method would you like to use?" << endl;
+            cout << "1 for Hashmap, 2 for Minheap:";
+            cin >> searchchoice;
+            if(searchchoice == 1){
+                //Sherwood please implement Hashmap search logic here
+                cout << "Hashmap search not implemented yet." << endl;
+            }else if(searchchoice == 2){
+                cout << "Here are some suggestions!"<< endl;
+                cout << "Order is name, duration, and explicit." << endl;
+                try{
+                    vector<Song> songsuggestions = minHeap.searchByArtist(Artist);
+                    for(int i =0; i<songsuggestions.size();i++){
+                        cout << songsuggestions[i].name << ", "<<songsuggestions[i].duration/1000<<", "<<songsuggestions[i].explicit_song<<endl;
+                    }
+                    cout << "What next?" << endl;
+                    cout << "===============" << endl;
+                }catch(exception& e){
+                    cout << "Artist not found, try again from menu."<< endl;
+                    cout << "===============" << endl;
+                }
+            }else{
+                cout << "Invalid method choice, try again from menu." << endl;
+                cout << "===============" << endl;
+            }
+        }else if(choice == 4){
+            cout << "Suggestions by Genre selected." << endl;
+            string Genre;
+            cout << "Input Genre, lowercase only:";
+            getline(cin, Genre);
+            int searchchoice;
+            cout << "What method would you like to use?" << endl;
+            cout << "1 for Hashmap, 2 for Minheap:";
+            cin >> searchchoice;
+            if(searchchoice == 1){
+                //Sherwood please implement Hashmap search logic here
+                cout << "Hashmap search not implemented yet." << endl;
+            }else if(searchchoice == 2){
+                cout << "Here are some suggestions!"<< endl;
+                cout << "Order is name, duration, and explicit." << endl;
+                try{
+                    vector<Song> songsuggestions = minHeap.searchByGenre(Genre);
+                    for(int i =0; i<songsuggestions.size();i++){
+                        cout << songsuggestions[i].name << ", "<<songsuggestions[i].duration/1000<<", "<<songsuggestions[i].explicit_song<<endl;
+                    }
+                    cout << "What next?" << endl;
+                    cout << "===============" << endl;
+                }catch(exception& e){
+                    cout << "Genre not found, try again from menu."<< endl;
+                    cout << "===============" << endl;
+                }
+            }else{
+                cout << "Invalid method choice, try again from menu." << endl;
+                cout << "===============" << endl;
+            }
+        }else if(choice < 0 || choice > 4){
+            cout << "Invalid choice, try again." << endl;
+        }
+    }while(choice != 0);
     cout << endl;
-    cout << "minheap build finished.\n";
-/*
+    cout << "Exiting program. Goodbye!" << endl;
+    file.close();
+    /*
 // HASHMAP TESTING
     Hashmap hashmap;
 

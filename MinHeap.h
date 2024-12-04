@@ -10,10 +10,9 @@
 using namespace std;
 
 struct Song{
-    string date, country, track_id, name;
+    string date, country, track_id, name, explicit_song;
     string artist_genres, artists;
     int position, streams, duration;
-    bool explicit_song;
     bool operator<(const Song& other) const{
         return position < other.position;
     }
