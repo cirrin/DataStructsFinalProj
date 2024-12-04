@@ -179,7 +179,7 @@ int main(){
                 cout << "===============" << endl;
             }
         }else if(choice == 2){
-            cout << "Search by Track ID selected." << endl;
+            cout << "Search by Track ID selected (Case Sensitive)." << endl;
             string ID;
             cout << "Input ID of track:";
             getline(cin, ID);
@@ -193,12 +193,17 @@ int main(){
             }else if(searchchoice == 2){
                 try{
                     Song foundsong = minHeap.searchbyID(ID);
+                    cout << endl;
                     cout << "Song name: " << foundsong.name << ", Duration in sec: " <<foundsong.duration/1000 << ", Position: " << foundsong.position;
                     cout << ", Explicit? " << foundsong.explicit_song << endl;
+                    cout << endl;
                     cout << "What next?" << endl;
+                    cout << endl;
                     cout << "===============" << endl;
                 }catch(exception& e){
+                    cout << endl;
                     cout << "Song not found, try again from menu."<< endl;
+                    cout << endl;
                     cout << "===============" << endl;
                 }
             }else{
