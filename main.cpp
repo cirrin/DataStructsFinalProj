@@ -62,12 +62,10 @@ vector<string> variableSplit(string& variable){
 }
 
 int main(){
-    string test = "\"['drill', 'florida rap', 'southern hip hop', 'atl hip hop', 'chicago rap', 'chicago drill', 'trap', 'hip hop', 'rap']\"";
     MinHeap minHeap;
     vector<string> genres;
-    string genre = "italian adult pop";
     vector<Song> filteredSongs;
-    ifstream file("../charts(fixed).csv");
+    ifstream file("charts(fixed).csv");
     if(!file.is_open()){
         cerr << "Could not open the file!" << endl;
         return 1;
@@ -75,6 +73,7 @@ int main(){
     string line;
     string header;
     getline(file, header);
+    auto befMin = chrono::steady_clock::now();
     while(getline(file, line)){
         //trims leading or trailing whitespaces if necessary
         line = regex_replace(line, regex("^\\s+|\\s+$"), "");
@@ -83,7 +82,6 @@ int main(){
 
         //process the fields
         //CSV isnt set yet for the minheap, use the fields as their values if you can do it, feel free to change datatypes in song struct
-
         if(fields.size() == 10){
 /*            cout << "Date: " << fields[0] << endl;
             cout << "Country: " << fields[1] << endl;
@@ -110,8 +108,10 @@ int main(){
         }else{
             cerr << "Invalid line: " << line << endl;
         }
-
-    }/*
+    }
+    auto afterMin = std::chrono::steady_clock::now();
+    auto durationMin = afterMin - befMin;
+    /*
     cout << "Artist Search: " << endl;
     vector<Song> songs = minHeap.searchByArtist("Avicii");
     for(int i=0; i<songs.size();i++){
@@ -156,6 +156,9 @@ int main(){
     cout << "\nHashmap created in: " << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() << " microseconds or ";
     cout << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() << " milliseconds\n\n";
 
+    cout << "MinHeap created in: " << chrono::duration_cast<chrono::microseconds>(durationMin).count() << " microseconds or ";
+    cout << chrono::duration_cast<std::chrono::milliseconds>(durationMin).count() << " milliseconds\n\n";
+
     do{
         cout << "1: Search by Name" << endl;
         cout << "2: Search by Track ID" << endl;
@@ -198,13 +201,19 @@ int main(){
                 cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds or ";
                 cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
 
-            }else if(searchchoice == 2){
+            }
+            else if(searchchoice == 2){
                 try{
-                Song foundsong = minHeap.searchByName(name);
-                cout << "Song name: " << foundsong.name << ", Duration in sec: " <<foundsong.duration/1000 << ", Position: " << foundsong.position;
-                cout << ", Explicit? " << foundsong.explicit_song << endl;
-                cout << "What next?" << endl;
-                cout << "===============" << endl;
+                    auto befMinS = chrono::steady_clock::now();
+                    Song foundsong = minHeap.searchByName(name);
+                    auto aftMinS = chrono::steady_clock::now();
+                    auto totMin = aftMinS - befMinS;
+                    cout << "Song name: " << foundsong.name << ", Duration in sec: " <<foundsong.duration/1000 << ", Position: " << foundsong.position;
+                    cout << ", Explicit? " << foundsong.explicit_song << endl << endl;
+                    cout << "Search function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(totMin).count() << " microseconds or ";
+                    cout << std::chrono::duration_cast<std::chrono::nanoseconds>(totMin).count() << " nanoseconds\n" << endl;
+                    cout << "What next?" << endl;
+                    cout << "===============" << endl;
                 }catch(exception& e){
                     cout << "Song not found, try again from menu."<< endl;
                     cout << "===============" << endl;
@@ -213,7 +222,8 @@ int main(){
                 cout << "Invalid method choice, try again from menu." << endl;
                 cout << "===============" << endl;
             }
-        }else if(choice == 2){
+        }
+        else if(choice == 2){
             cout << "Search by Track ID selected (Case Sensitive)." << endl;
             string ID;
             cout << "Input ID of track:";
@@ -245,13 +255,19 @@ int main(){
                 cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds or ";
                 cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
 
-            }else if(searchchoice == 2){
+            }
+            else if(searchchoice == 2){
                 try{
+                    auto befMinS = chrono::steady_clock::now();
                     Song foundsong = minHeap.searchbyID(ID);
+                    auto aftMinS = chrono::steady_clock::now();
+                    auto totMin = aftMinS - befMinS;
                     cout << endl;
                     cout << "Song name: " << foundsong.name << ", Duration in sec: " <<foundsong.duration/1000 << ", Position: " << foundsong.position;
                     cout << ", Explicit? " << foundsong.explicit_song << endl;
                     cout << endl;
+                    cout << "Search function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(totMin).count() << " microseconds or ";
+                    cout << std::chrono::duration_cast<std::chrono::nanoseconds>(totMin).count() << " nanoseconds\n" << endl;
                     cout << "What next?" << endl;
                     cout << endl;
                     cout << "===============" << endl;
@@ -265,7 +281,8 @@ int main(){
                 cout << "Invalid method choice, try again from menu." << endl;
                 cout << "===============" << endl;
             }
-        }else if(choice == 3){
+        }
+        else if(choice == 3){
             cout << "Suggestions by Artist selected." << endl;
             string Artist;
             cout << "Input Artist name, try to be exact (Case Sensitive):";
@@ -309,8 +326,12 @@ int main(){
                 cout << "\nSearch function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(searchDuration).count() << " microseconds or ";
                 cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
 
-            }else if(searchchoice == 2){
+            }
+            else if(searchchoice == 2){
+                auto befMinS = chrono::steady_clock::now();
                 vector<Song> songsuggestions = minHeap.searchByArtist(Artist);
+                auto aftMinS = chrono::steady_clock::now();
+                auto totMin = aftMinS - befMinS;
                 if(!songsuggestions.empty()){
                     cout << endl;
                     cout << "Here are some suggestions!"<< endl;
@@ -320,6 +341,8 @@ int main(){
                         cout<< i+1 << ": " << songsuggestions[i].name << ", "<<songsuggestions[i].duration/1000<<", "<<songsuggestions[i].explicit_song<<endl;
                     }
                     cout << endl;
+                    cout << "Search function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(totMin).count() << " microseconds or ";
+                    cout << std::chrono::duration_cast<std::chrono::nanoseconds>(totMin).count() << " nanoseconds\n" << endl;
                     cout << "What next?" << endl;
                     cout << endl;
                     cout << "===============" << endl;
@@ -335,7 +358,8 @@ int main(){
                 cout << endl;
                 cout << "===============" << endl;
             }
-        }else if(choice == 4){
+        }
+        else if(choice == 4){
             cout << "Suggestions by Genre selected." << endl;
             string Genre;
             cout << "Input Genre, lowercase only:";
@@ -377,7 +401,10 @@ int main(){
                 cout << std::chrono::duration_cast<std::chrono::nanoseconds>(searchDuration).count() << " nanoseconds\n";
 
             }else if(searchchoice == 2){
+                auto befMinS = chrono::steady_clock::now();
                 vector<Song> songsuggestions = minHeap.searchByGenre(Genre);
+                auto aftMinS = chrono::steady_clock::now();
+                auto totMin = aftMinS - befMinS;
                 if(!songsuggestions.empty()){
                     cout << endl;
                     cout << "Here are some suggestions!"<< endl;
@@ -386,6 +413,9 @@ int main(){
                     for(int i =0; i<songsuggestions.size();i++){
                         cout << i+1 << ": " << songsuggestions[i].name << ", "<<songsuggestions[i].duration/1000<<", "<<songsuggestions[i].explicit_song<<endl;
                     }
+                    cout << endl;
+                    cout << "Search function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(totMin).count() << " microseconds or ";
+                    cout << std::chrono::duration_cast<std::chrono::nanoseconds>(totMin).count() << " nanoseconds\n" << endl;
                     cout << endl;
                     cout << "What next?" << endl;
                     cout << endl;
