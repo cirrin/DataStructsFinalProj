@@ -99,10 +99,15 @@ int main(){
         }else{
             cerr << "Invalid line: " << line << endl;
         }
+
     }
     auto afterMin = std::chrono::steady_clock::now();
     auto durationMin = afterMin - befMin;
     file.close();
+
+
+
+
     auto b4hash = std::chrono::steady_clock::now();
     //cout << "here1" << endl;
     Hashmap hashmap;
@@ -339,7 +344,7 @@ int main(){
             string Genre;
             cout << "Input Genre, lowercase only:";
             getline(cin, Genre);
-            cout << Genre << endl;
+            //cout << Genre << endl;
             int searchchoice;
             cout << "What method would you like to use?" << endl;
             cout << "1 for Hashmap, 2 for Minheap:";
@@ -422,5 +427,6 @@ int main(){
     cout << endl;
     cout << "Exiting program. Goodbye!" << endl;
     file.close();
+
     return 0;
 }
