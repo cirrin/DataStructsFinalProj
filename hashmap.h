@@ -90,7 +90,7 @@ void readFileMaps(unordered_map<string, string> &trackNames,
     string line;
     getline(file, line);
 
-    getline(file, line);
+    //getline(file, line);
     while(getline(file, line)) {
         vector<string> test = splitString(line);
         // the track ID will be the key, and all information will be held there.
@@ -102,22 +102,22 @@ void readFileMaps(unordered_map<string, string> &trackNames,
         for (string i : aNames) {
             //cout << i.substr(1,i.size()-2) << endl;
             // current track will be added to all artist name keys.
-            if (artistNames[i.substr(1,i.size()-2)].size() <= 4) {
-                artistNames[i.substr(1, i.size() - 2)].push_back(test[4]);
-            }
+
+            artistNames[i.substr(1, i.size() - 2)].push_back(test[4]);
+
         }
         // repeat the same for genres.
         vector<string> gs = splitArtistGenre(test[6]);
         //if (gs.size() == 0) continue;
         if(test[6] != "[]") {
             for (string i: gs) {
-                if (genre[i.substr(1, i.size() - 2)].size() <= 4) {
-                    genre[i.substr(1, i.size() - 2)].push_back(test[4]);
-                }
+
+                genre[i.substr(1, i.size() - 2)].push_back(test[4]);
+
             }
         }
         //printing out each row.
-        getline(file, line);
+        //getline(file, line);
     }
     file.close();
 
@@ -135,13 +135,13 @@ public:
 
     }
 
-    vector<string> findByID(string id) {
+    vector<string> &findByID(string id) {
         // returns the vector<string> in the id map.
         // if the item does not exist, c++ returns an empty vector.
         return trackID[id];
     }
 
-    vector<string> findTracksByArtist(string artist) {
+    vector<string> &findTracksByArtist(string artist) {
         // returns a vector of strings, of track IDs by said artist.
         // if the artist does not exist, will return an empty vector.
         return artistNames[artist];
@@ -159,7 +159,7 @@ public:
         return temp;
     }
 
-    unordered_map<string, vector<string>> getArtistNames() {
+    unordered_map<string, vector<string>> &getArtistNames() {
         return artistNames;
     }
 };

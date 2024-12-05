@@ -104,9 +104,9 @@ int main(){
     auto durationMin = afterMin - befMin;
     file.close();
     auto b4hash = std::chrono::steady_clock::now();
-    cout << "here1" << endl;
+    //cout << "here1" << endl;
     Hashmap hashmap;
-    cout << "here2" << endl;
+    //cout << "here2" << endl;
     auto afterHash = std::chrono::steady_clock::now();
     auto duration = afterHash - b4hash;
 
@@ -278,9 +278,11 @@ int main(){
                     cout << "Track name not found. Please type exact name.\n";
                 }
                 else {
-                    cout << "ALL TRACKS BY " << Artist << ": \n\n";
+                    int count = 0;
+                    cout << "5 TRACKS BY " << Artist << ": \n\n";
                     // we need to loop through each track, and post the track information of each.
                     for (string id : artistTracksInformation) {
+                        if (count == 5) break;
                         vector<string> trackIDInformation = hashmap.findByID(id);
 
                         cout << "Song name: " << trackIDInformation[9] << endl;
@@ -288,6 +290,7 @@ int main(){
                         cout << "Explicit?: " << trackIDInformation[8] << endl;
 
                         cout << endl;
+                        count ++;
                     }
                 }
                 auto afterSearchHash = std::chrono::steady_clock::now();
@@ -354,10 +357,12 @@ int main(){
                     cout << "Genre not found. Please type exact genre.\n";
                 }
                 else {
-                    cout << "ALL TRACKS OF GENRE \"" << Genre << "\":\n\n";
+                    cout << "5 TRACKS OF GENRE \"" << Genre << "\":\n\n";
 
                     // we need to loop through each track, and post the track information of each.
+                    int count = 0;
                     for (string id : genreTracksInformation) {
+                        if (count == 5) break;
                         vector<string> trackIDInformation = hashmap.findByID(id);
 
                         cout << "Song name: " << trackIDInformation[9] << endl;
@@ -365,6 +370,8 @@ int main(){
                         cout << "Explicit?: " << trackIDInformation[8] << endl;
 
                         cout << endl;
+
+                        count ++;
                     }
                 }
                 auto afterSearchHash = std::chrono::steady_clock::now();
