@@ -78,9 +78,9 @@ public:
         string searchGenre = lowerCase(genre);
         vector<Song> matchingSongs;
         for(Song& song:heap){
-                if(song.artist_genres.find(searchGenre) != string::npos&&matchingSongs.size()!=5){
-                    matchingSongs.push_back(song);
-                }
+            if(song.artist_genres.find(searchGenre) != string::npos&&matchingSongs.size()!=5){
+                matchingSongs.push_back(song);
+            }
         }
         return matchingSongs;
     }
