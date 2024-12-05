@@ -93,8 +93,6 @@ void readFileMaps(unordered_map<string, string> &trackNames,
     getline(file, line);
     while(getline(file, line)) {
         vector<string> test = splitString(line);
-
-
         // the track ID will be the key, and all information will be held there.
         trackID[test[4]] = test;
         // add into tracknames.
@@ -104,14 +102,18 @@ void readFileMaps(unordered_map<string, string> &trackNames,
         for (string i : aNames) {
             //cout << i.substr(1,i.size()-2) << endl;
             // current track will be added to all artist name keys.
-            artistNames[i.substr(1,i.size()-2)].push_back(test[4]);
+            if (artistNames[i.substr(1,i.size()-2)].size() <= 4) {
+                artistNames[i.substr(1, i.size() - 2)].push_back(test[4]);
+            }
         }
         // repeat the same for genres.
         vector<string> gs = splitArtistGenre(test[6]);
         //if (gs.size() == 0) continue;
         if(test[6] != "[]") {
             for (string i: gs) {
-                genre[i.substr(1, i.size() - 2)].push_back(test[4]);
+                if (genre[i.substr(1, i.size() - 2)].size() <= 4) {
+                    genre[i.substr(1, i.size() - 2)].push_back(test[4]);
+                }
             }
         }
         //printing out each row.

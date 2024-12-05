@@ -155,7 +155,7 @@ int main(){
                 // if findbyid finds no match, then we return an empty list.
                 // this catches the empty list.
                 if (trackIDInformation.size() == 0) {
-                    cout << "Track name not found. Please type exact name.\n";
+                    cout << "Track not found. Please type exact name.\n";
                 }
                 else {
                     cout << "Song name: " << trackIDInformation[9] << endl;
@@ -173,8 +173,10 @@ int main(){
                     Song foundsong = minHeap.searchByName(name);
                     auto aftMinS = chrono::steady_clock::now();
                     auto totMin = aftMinS - befMinS;
-                    cout << "Song name: " << foundsong.name << ", Duration in sec: " <<foundsong.duration/1000 << ", Position: " << foundsong.position;
-                    cout << ", Explicit? " << foundsong.explicit_song << endl << endl;
+                    cout << "Song name: " << foundsong.name << endl;
+                    cout << "Duration in sec: " <<foundsong.duration/1000 << endl;
+                    cout << "Position: " << foundsong.position << endl;
+                    cout << "Explicit? " << foundsong.explicit_song << endl << endl;
                     cout << "Search function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(totMin).count() << " microseconds or ";
                     cout << std::chrono::duration_cast<std::chrono::nanoseconds>(totMin).count() << " nanoseconds\n" << endl;
                     cout << "What next?" << endl;
@@ -208,7 +210,7 @@ int main(){
                 // if findbyid finds no match, then we return an empty list.
                 // this catches the empty list.
                 if (trackIDInformation.size() == 0) {
-                    cout << "Track name not found. Please type exact name.\n";
+                    cout << "Track by ID not found. Please type exact ID.\n";
                 }
                 else {
                     cout << "Song name: " << trackIDInformation[9] << endl;
@@ -228,8 +230,10 @@ int main(){
                     auto aftMinS = chrono::steady_clock::now();
                     auto totMin = aftMinS - befMinS;
                     cout << endl;
-                    cout << "Song name: " << foundsong.name << ", Duration in sec: " <<foundsong.duration/1000 << ", Position: " << foundsong.position;
-                    cout << ", Explicit? " << foundsong.explicit_song << endl;
+                    cout << "Song name: " << foundsong.name << endl;
+                    cout << "Duration (seconds): " <<foundsong.duration/1000 << endl;
+                    cout << "Position: " << foundsong.position << endl;
+                    cout << "Explicit? " << foundsong.explicit_song << endl;
                     cout << endl;
                     cout << "Search function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(totMin).count() << " microseconds or ";
                     cout << std::chrono::duration_cast<std::chrono::nanoseconds>(totMin).count() << " nanoseconds\n" << endl;
@@ -252,7 +256,7 @@ int main(){
             string Artist;
             cout << "Input Artist name, try to be exact (Case Sensitive):";
             getline(cin, Artist);
-            if (Artist == "Ed Sheeran") cout << "true\n";
+            //if (Artist == "Ed Sheeran") cout << "true\n";
             int searchchoice;
             cout << "What method would you like to use?" << endl;
             cout << "1 for Hashmap, 2 for Minheap:";
@@ -303,9 +307,12 @@ int main(){
                     cout << "Order is name, duration, and explicit." << endl;
                     cout << endl;
                     for(int i =0; i<songsuggestions.size();i++){
-                        cout<< i+1 << ": " << songsuggestions[i].name << ", "<<songsuggestions[i].duration/1000<<", "<<songsuggestions[i].explicit_song<<endl;
+                        cout<< i+1 << "):" << endl;
+                        cout<< "Song name: " << songsuggestions[i].name << endl;
+                        cout << "Duration in sec: " << songsuggestions[i].duration/1000<< endl;
+                        cout << "Explicit? " << songsuggestions[i].explicit_song<<endl;
+                        cout << endl;
                     }
-                    cout << endl;
                     cout << "Search function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(totMin).count() << " microseconds or ";
                     cout << std::chrono::duration_cast<std::chrono::nanoseconds>(totMin).count() << " nanoseconds\n" << endl;
                     cout << "What next?" << endl;
@@ -376,9 +383,12 @@ int main(){
                     cout << "Order is name, duration, and explicit." << endl;
                     cout << endl;
                     for(int i =0; i<songsuggestions.size();i++){
-                        cout << i+1 << ": " << songsuggestions[i].name << ", "<<songsuggestions[i].duration/1000<<", "<<songsuggestions[i].explicit_song<<endl;
+                        cout << i+1 << "):" << endl;
+                        cout << "Song name: " << songsuggestions[i].name << endl;
+                        cout << "Duration (seconds): " << songsuggestions[i].duration/1000<< endl;
+                        cout << "Explicit?: " <<songsuggestions[i].explicit_song<<endl;
+                        cout << endl;
                     }
-                    cout << endl;
                     cout << "Search function done in: " << std::chrono::duration_cast<std::chrono::microseconds>(totMin).count() << " microseconds or ";
                     cout << std::chrono::duration_cast<std::chrono::nanoseconds>(totMin).count() << " nanoseconds\n" << endl;
                     cout << endl;
