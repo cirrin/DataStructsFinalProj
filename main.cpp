@@ -83,16 +83,7 @@ int main(){
         //process the fields
         //CSV isnt set yet for the minheap, use the fields as their values if you can do it, feel free to change datatypes in song struct
         if(fields.size() == 10){
-/*            cout << "Date: " << fields[0] << endl;
-            cout << "Country: " << fields[1] << endl;
-            cout << "Position: " << fields[2] << endl;
-            cout << "Streams: " << fields[3] << endl;
-            cout << "Track ID: " << fields[4] << endl;
-            cout << "Artists: " << fields[5] << endl;*/
-           // cout << "Genres: " << fields[6] << endl;
-           // cout << "Duration: " << fields[7] << endl;
-           // cout << "Explicit: " << fields[8] << endl;
-           // cout << "Name: " << fields[9] << endl;
+
             Song *x = new Song; // feel free to change this implementation
             x->date= fields[0];
             x->country = fields[1];
@@ -111,37 +102,11 @@ int main(){
     }
     auto afterMin = std::chrono::steady_clock::now();
     auto durationMin = afterMin - befMin;
-    /*
-    cout << "Artist Search: " << endl;
-    vector<Song> songs = minHeap.searchByArtist("Avicii");
-    for(int i=0; i<songs.size();i++){
-        cout << songs[i].name << endl;
-    }
-    cout <<"Id Search:"<<endl;
-    cout << minHeap.searchbyID("5dVUSdsePmEKkq4ryfrobU").name << endl;
-    cout << "Genre Search: " << endl;
-    vector<Song> genresongs = minHeap.searchByGenre("Pop");
-    for(int i=0; i<genresongs.size();i++){
-        cout << genresongs[i].name << endl;
-    }*/
-    /*
-    filteredSongs = minHeap.searchByGenre(genre);
-    for (auto i: filteredSongs) {
-        cout << i.name << " by: ";
-        for (int x = 0; x < i.artists.size(); x++) {
-            if (x != i.artists.size() - 1) {
-                cout << i.artists[x] << ", ";
-            }
-            else{
-                cout << i.artists[x] << ' ';
-            }
-        }
-        cout << " is explicit? : " << i.explicit_song << " highest position: " << i.position << " spotify id " << i.track_id << endl;
-    }
-     */
-
+    file.close();
     auto b4hash = std::chrono::steady_clock::now();
+    cout << "here1" << endl;
     Hashmap hashmap;
+    cout << "here2" << endl;
     auto afterHash = std::chrono::steady_clock::now();
     auto duration = afterHash - b4hash;
 
@@ -440,23 +405,5 @@ int main(){
     cout << endl;
     cout << "Exiting program. Goodbye!" << endl;
     file.close();
-    /*
-// HASHMAP TESTING
-    Hashmap hashmap;
-
-    unordered_map<string, vector<string>> t = hashmap.getArtistNames();
-    cout << t.size() << endl;
-
-//    for (unordered_map<string, vector<string>>::iterator it=t.begin(); it!=t.end(); it++) {
-//        cout << it->first << endl;
-//    }
-
-    // outputs all track IDs with Ed Sheeran as artist.
-    vector<string> ts = hashmap.findTracksByArtist("'Ed Sheeran'");
-    for (string i : ts) {
-        cout << i << endl;
-    }
-*/
-
     return 0;
 }

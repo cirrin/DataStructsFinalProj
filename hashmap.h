@@ -29,10 +29,8 @@ vector<string> splitString(const string& input) {
         }
 
 
-        //cout << endl;
         // Add the substring to the result
         result.push_back(input.substr(start, pos - start));
-        //cout << input.substr(start, pos - start) << endl;
         start = pos + 1;
         loops ++;
     }
@@ -78,7 +76,7 @@ void readFileMaps(unordered_map<string, string> &trackNames,
                   unordered_map<string, vector<string>> &genre,
                   unordered_map<string, vector<string>> & trackID) {
     ifstream file;
-    file.open("../charts.csv");
+    file.open("charts(fixed).csv");
 
     if (!file.is_open()) {
         cout << "ERROR: file cannot be opened!" << endl;
@@ -93,14 +91,9 @@ void readFileMaps(unordered_map<string, string> &trackNames,
     getline(file, line);
 
     getline(file, line);
-    //int counter = 0;
-    while(line != ",,,,,,,,,") {
+    while(getline(file, line)) {
         vector<string> test = splitString(line);
 
-//        for(string j : test) {
-//            cout << j << " ";
-//        }
-//        cout << endl;
 
         // the track ID will be the key, and all information will be held there.
         trackID[test[4]] = test;
@@ -122,14 +115,7 @@ void readFileMaps(unordered_map<string, string> &trackNames,
             }
         }
         //printing out each row.
-        /*for (string i: test) {
-            cout << i << " ";
-        }
-        cout << endl;*/
-
-        //counter ++;
         getline(file, line);
-        //cout << ".";
     }
     file.close();
 
