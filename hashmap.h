@@ -97,23 +97,20 @@ void readFileMaps(unordered_map<string, string> &trackNames,
         trackID[test[4]] = test;
         // add into tracknames.
         trackNames[test[test.size()-1]] = test[4];
+        cout << trackNames[test[test.size()-1]] << endl;
         // add into artistnames.
         vector<string> aNames = splitArtistGenre(test[5]);
         for (string i : aNames) {
             //cout << i.substr(1,i.size()-2) << endl;
             // current track will be added to all artist name keys.
-            if (artistNames[i.substr(1,i.size()-2)].size() <= 4) {
-                artistNames[i.substr(1, i.size() - 2)].push_back(test[4]);
-            }
+            artistNames[i.substr(1, i.size() - 2)].push_back(test[4]);
         }
         // repeat the same for genres.
         vector<string> gs = splitArtistGenre(test[6]);
         //if (gs.size() == 0) continue;
         if(test[6] != "[]") {
             for (string i: gs) {
-                if (genre[i.substr(1, i.size() - 2)].size() <= 4) {
-                    genre[i.substr(1, i.size() - 2)].push_back(test[4]);
-                }
+                genre[i.substr(1, i.size() - 2)].push_back(test[4]);
             }
         }
         //printing out each row.

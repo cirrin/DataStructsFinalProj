@@ -136,7 +136,7 @@ int main(){
         if(choice == 1){
             cout << "Search by Name selected." << endl;
             string name;
-            cout << "Input name of song, try to be exact:";
+            cout << "Input name of song, try to be exact (Case Sensitive):";
             getline(cin, name);
             int searchchoice;
             cout << "What method would you like to use?" << endl;
